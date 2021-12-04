@@ -1,11 +1,24 @@
-
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import './App.css';
+//page imports
+import Login from "./pages/Login";
+import Header from "./components/Header";
+import CreateUser from "./pages/CreateUser";
+import UserProfile from "./pages/UserProfile";
+
 
 function App() {
   return (
-    <div className="App">
-
-    </div>
+    <>
+      <Header/>
+      <Router>
+        <Routes>
+          <Route path="/user/:id" element={<UserProfile />} />
+          <Route path="/create" element={<CreateUser />} />
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
