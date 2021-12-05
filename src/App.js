@@ -1,5 +1,10 @@
 import React, {useEffect, useState} from "react"
-import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import {
+  Navigate,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"
 import './App.css';
@@ -26,7 +31,6 @@ function App() {
     initializeApp(FirebaseConfig);
     setAppInitialized(true);
   }, []);
-
   // check to see if user is logged in
   //user loads page, check status
   //set state acordingly
@@ -43,8 +47,9 @@ function App() {
           setUserInformation({});
           setLoggedIn(false);
         }
+        //whenevr state changes setloading to false
+        setLoading(false);
       });
-      setLoading(false);
     }
   }, [appInitialized]);
 
@@ -59,7 +64,7 @@ function App() {
     });
   }
 
-  if (loading) return null;
+  if (loading || !appInitialized) return null;
   return(
     <>
       <Header logout={logout} loggedIn={loggedIn}/>
@@ -67,7 +72,13 @@ function App() {
         <Routes>
           <Route
             path="/user/:id"
-            element={loggedIn ? <UserProfile userInformation={userInformation}/> : <Navigate to="/" />}
+            element={
+              loggedIn ? (
+                <UserProfile userInformation={userInformation}/>
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
           <Route
             path="/create"
@@ -95,7 +106,7 @@ function App() {
                 <Navigate to={`/user/:${userInformation.uid}`} />
               )
             }
-        />
+          />
         </Routes>
       </Router>
     </>
