@@ -24,8 +24,9 @@ function Login({setLoggedIn, setUserInformation}){
         .catch((error) => {
           const errorCode=error.code;
           const errorMessage=error.message;
+          console.warn({error, errorCode, errorMessage})
         });
-    }, []);
+    }, [setLoggedIn,setUserInformation]);
 
   return (
     <div className="PageWrapper">

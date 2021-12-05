@@ -3,7 +3,6 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import CreateUserForm from '../components/CreateUserForm';
 
 function CreateUser({setLoggedIn, setUserInformation}){
-
   const signUpUser=useCallback((e) => {
     e.preventDefault();
     const email= e.currentTarget.email.value;
@@ -25,8 +24,9 @@ function CreateUser({setLoggedIn, setUserInformation}){
       .catch((error) => {
         const errorCode=error.code;
         const errorMessage=error.message;
+        console.warn({error, errorCode, errorMessage})
       });
-  }, []);
+  }, [setLoggedIn, setUserInformation]);
   return (
     <div className="PageWrapper">
       <h2 >CreateUser</h2>
